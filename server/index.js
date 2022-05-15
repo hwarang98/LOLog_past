@@ -19,7 +19,6 @@ app.use(
 app.get("/", function (req, res) {
   res.send("hello NodeJs");
 });
-
-app.get("/api", controllers.api);
+app.post("/api", controllers.api);
 
 app.listen(4000, () => console.log("4000번 포트 대기"));

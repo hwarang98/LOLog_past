@@ -2,12 +2,7 @@ require("dotenv").config();
 const axios = require("axios");
 
 module.exports = (req, res) => {
-  //
-  console.log("req.body: ", req.body);
-  // console.log(req.body);
   const { summoner } = req.body;
-  console.log(summoner);
-  // const summoner = "돌면킬";
   const URL = "https://kr.api.riotgames.com";
   const headers = {
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -28,6 +23,6 @@ module.exports = (req, res) => {
     )
     .then((data) => {
       console.log("✅ data: ", data.data);
-      res.status(200).json({ message: "성공" });
+      res.status(200).send({ message: "성공" });
     });
 };

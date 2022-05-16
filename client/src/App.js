@@ -1,14 +1,14 @@
-import "./App.css";
-import Summoner from "./components/summoner";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Api from "./components/Api";
+import Summoner from "./components/Summoner";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="logoText">lol.gg</h1>
-      <div className="search">
-        <Summoner />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Api />} />
+      <Route path="/summoner" element={<Summoner />} />
+    </Routes>
   );
 }
 

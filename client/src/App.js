@@ -1,15 +1,14 @@
-import "./App.css";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Api from "./components/Api";
+import Summoner from "./components/Summoner";
+
 function App() {
   return (
-    <form>
-      <div className="App">
-        <h1 className="logoText">lol.gg</h1>
-        <div className="search">
-          <input placeholder="소환사명" />
-          <button>검색</button>
-        </div>
-      </div>
-    </form>
+    <Routes>
+      <Route path="/" element={<Api />} />
+      <Route path="/summoner" element={<Summoner />} />
+    </Routes>
   );
 }
 

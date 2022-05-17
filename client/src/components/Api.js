@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useState, useCallback } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Api.css";
 
 function Api() {
   const [summoner, setSummoner] = useState("");
+  const navigate = useNavigate();
 
   const summonerApi = (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ function Api() {
       )
       .then((data) => {
         console.log(data.data);
+        navigate("/summoner");
       })
       .catch((err) => {
         console.log("❗️ 에러: ", err);
@@ -30,9 +32,6 @@ function Api() {
   const onChangeSummoner = useCallback((e) => {
     setSummoner(e.target.value);
   });
-  // const goResult = () => {
-  //   useNavigate("/Su");
-  // };
   return (
     <div className="container">
       <h1 className="logoText">LOLog</h1>

@@ -22,7 +22,8 @@ module.exports = (req, res) => {
       }
     )
     .then((data) => {
-      console.log("✅ data: ", data.data);
-      res.status(200).send({ message: "성공" });
+      const summonerInfo = JSON.stringify(data.data).split(",");
+      const infoParse = JSON.parse(summonerInfo);
+      res.status(200).send({ message: "성공", data: infoParse });
     });
 };

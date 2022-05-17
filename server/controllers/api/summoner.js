@@ -10,7 +10,6 @@ module.exports = (req, res) => {
     Origin: "https://developer.riotgames.com",
     "X-Riot-Token": `${process.env.API_KEY}`,
   };
-
   axios
     .get(
       `${URL}/lol/summoner/v4/summoners/by-name/${encodeURI(

@@ -22,12 +22,27 @@ function Api() {
         }
       )
       .then((data) => {
-        console.log(data.data);
+        const {
+          id,
+          accountId,
+          puuid,
+          name,
+          profileIconId,
+          revisionDate,
+          summonerLevel,
+        } = data.data.data;
+        axios.post("http://localhost:4000/summoner", {
+          id,
+          accountId,
+          puuid,
+          name,
+          profileIconId,
+          revisionDate,
+          summonerLevel,
+        });
         navigate("/summoner");
       })
-      .catch((err) => {
-        console.log("❗️ 에러: ", err);
-      });
+      .catch((err) => console.log("에러뜸: ", err));
   };
   const onChangeSummoner = useCallback((e) => {
     setSummoner(e.target.value);

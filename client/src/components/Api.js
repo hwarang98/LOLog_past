@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Api.css";
+import Summoners from "./Summoner";
 
 function Api() {
   const [summoner, setSummoner] = useState("");
@@ -22,6 +23,7 @@ function Api() {
         }
       )
       .then((data) => {
+        console.log(data.data.data);
         const {
           id,
           accountId,
@@ -40,7 +42,7 @@ function Api() {
           revisionDate,
           summonerLevel,
         });
-        navigate("/summoner");
+        navigate("/summoner", { state: data.data.data });
       })
       .catch((err) => console.log("에러뜸: ", err));
   };

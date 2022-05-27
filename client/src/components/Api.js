@@ -23,7 +23,6 @@ function Api() {
         }
       )
       .then((data) => {
-        console.log(data.data.data);
         const {
           id,
           accountId,

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Summoner.css";
 import { useLocation } from "react-router";
 
 function Summoners() {
-  const { state } = useLocation();
   const [userInfo, setUserInfo] = useState();
+  const [freeRankWins, setFreeRankWins] = useState();
+  const [freeRankLosses, setFreeRankLosses] = useState();
+  const [soloRankWins, setSoloRankWins] = useState();
+  const [soloRankLosses, setSoloRankLosses] = useState();
+  const { state } = useLocation();
   const {
     id,
     accountId,
@@ -14,8 +19,8 @@ function Summoners() {
     revisionDate,
     summonerLevel,
   } = state;
+  const userIcon = `http://ddragon.leagueoflegends.com/cdn/12.10.1/img/profileicon/${profileIconId}.png`;
   const userApi = (e) => {
-    console.log("검색결과인데 들어옴?");
     const url = "http://localhost:4000/summoner";
     axios
       .post("http://localhost:4000/summoner", {
@@ -29,33 +34,50 @@ function Summoners() {
       })
       .then((data) => {
         const userData = data.data.data;
-        // console.log(userData);
         setUserInfo(userData);
-        console.log("성공");
+        setFreeRankWins(userData[0].wins);
+        setFreeRankLosses(userData[0].losses);
+        setSoloRankWins(userData[1].wins);
+        setSoloRankLosses(userData[1].losses);
       })
       .catch((err) => console.log("에러뜸: ", err));
   };
-  console.log(userInfo);
   useEffect(() => {
     return () => {
       userApi();
     };
   }, []);
+
+  const freeRankGameSum = freeRankWins + freeRankLosses;
+  const freeRankWinRate = Math.ceil((freeRankWins / freeRankGameSum) * 100);
+
+  const soloRankGameSum = soloRankWins + soloRankLosses;
+  const soloRankWinRate = Math.ceil((soloRankWins / soloRankGameSum) * 100);
+
   return (
     <div>
       <h1>소환사 정보</h1>
       {userInfo &&
         userInfo.map((user) => {
-          console.log("user?: ", user.summonerName);
           return (
-            <div>
-              <li>{user.summonerName}</li>
+            <div key={user.wins}>
+              <div className="rankType">{user.queueType}</div>
+              <img src={userIcon} style={{ height: 100 }} />
+              <li>
+                {user.summonerName} {summonerLevel}
+              </li>
               <li>
                 {user.tier} {user.rank}
               </li>
-              <li>{user.wins}승</li>
-              <li>{user.losses}패</li>
-              {user.queueType}
+              <li>{user.wins} 승</li>
+              <li>{user.losses} 패</li>
+              <div className="rankType">
+                {user.queueType === "RANKED_FLEX_SR" ? (
+                  <li>승률 {freeRankWinRate} %</li>
+                ) : (
+                  <li>승률 {soloRankWinRate} %</li>
+                )}
+              </div>
             </div>
           );
         })}

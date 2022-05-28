@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Summoner.css";
 import { useLocation } from "react-router";
+import TireEmblems from "./TireEmblem";
 
 function Summoners() {
   const [userInfo, setUserInfo] = useState();
@@ -62,7 +63,9 @@ function Summoners() {
           return (
             <div key={user.wins}>
               <div className="rankType">{user.queueType}</div>
+
               <img src={userIcon} style={{ height: 100 }} />
+              <TireEmblems userTire={user.tier}></TireEmblems>
               <li>
                 {user.summonerName} {summonerLevel}
               </li>

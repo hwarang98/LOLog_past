@@ -10,6 +10,7 @@ function Summoners() {
   const [freeRankLosses, setFreeRankLosses] = useState();
   const [soloRankWins, setSoloRankWins] = useState();
   const [soloRankLosses, setSoloRankLosses] = useState();
+  const [matchList, setMatchList] = useState();
   const { state } = useLocation();
   const {
     id,
@@ -22,7 +23,6 @@ function Summoners() {
   } = state;
   const userIcon = `http://ddragon.leagueoflegends.com/cdn/12.10.1/img/profileicon/${profileIconId}.png`;
   const userApi = (e) => {
-    const url = "http://localhost:4000/summoner";
     axios
       .post("http://localhost:4000/summoner", {
         id,
@@ -41,14 +41,25 @@ function Summoners() {
         setSoloRankWins(userData[1].wins);
         setSoloRankLosses(userData[1].losses);
       })
+      .then(() => {
+        axios
+          .post("http://localhost:4000/match", {
+            puuid,
+          })
+          .then((data) => {
+            const matchData = data.data.data;
+            setMatchList(matchData);
+          });
+      })
       .catch((err) => console.log("에러뜸: ", err));
   };
+  console.log(matchList);
+
   useEffect(() => {
     return () => {
       userApi();
     };
   }, []);
-
   const freeRankGameSum = freeRankWins + freeRankLosses;
   const freeRankWinRate = Math.ceil((freeRankWins / freeRankGameSum) * 100);
 

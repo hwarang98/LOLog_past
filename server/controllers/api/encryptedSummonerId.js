@@ -24,7 +24,6 @@ module.exports = (req, res) => {
     .then((data) => {
       const stringify = JSON.stringify(data.data).split(",");
       const userData = JSON.parse(stringify);
-      console.log("userData: ", userData);
       res
         .status(200)
         .send({ message: "summoner 로 보내기 성공", data: userData });

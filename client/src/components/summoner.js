@@ -53,7 +53,6 @@ function Summoners() {
       })
       .catch((err) => console.log("에러뜸: ", err));
   };
-  console.log(matchList);
 
   useEffect(() => {
     return () => {

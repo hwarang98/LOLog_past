@@ -18,7 +18,17 @@ module.exports = (req, res) => {
     })
     .then((data) => {
       const matchList = data.data;
+      const matchId = matchList[0];
       console.log("matchList: ", matchList);
-      res.status(200).send({ message: "match 보내기 성공", data: matchList });
+      axios
+        .get(`${URL}/lol/match/v5/matches/${matchId}`, {
+          headers,
+          withCredentials: true,
+        })
+        .then((data) => {
+          const gameInfo = data.data.info;
+          console.log("gameInfo: ", gameInfo);
+        });
+      // res.status(200).send({ message: "match 보내기 성공", data: data });
     });
 };

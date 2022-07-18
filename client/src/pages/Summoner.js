@@ -48,6 +48,7 @@ function Summoners() {
           })
           .then((data) => {
             const matchData = data.data.data;
+            console.log(matchData);
             setMatchList(matchData);
           });
       })

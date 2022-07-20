@@ -17,18 +17,19 @@ module.exports = (req, res) => {
       withCredentials: true,
     })
     .then((data) => {
+      let gameInfo = [];
       const matchList = data.data;
-      const matchId = matchList[0];
       console.log("matchList: ", matchList);
-      axios
-        .get(`${URL}/lol/match/v5/matches/${matchId}`, {
-          headers,
-          withCredentials: true,
-        })
-        .then((data) => {
-          const gameInfo = data.data.info;
-          console.log("gameInfo: ", gameInfo);
-        });
-      // res.status(200).send({ message: "match 보내기 성공", data: data });
+      for (let i = 0; i < matchList.length; i++) {
+        axios
+          .get(`${URL}/lol/match/v5/matches/${matchList[i]}`, {
+            headers,
+            withCredentials: true,
+          })
+          .then((data) => {
+            gameInfo.push("asd");
+          });
+      }
+      res.status(200).send({ data: gameInfo, message: "성공" });
     });
 };
